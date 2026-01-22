@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <%- include('includes/head') %>
+<body>
+
+  <%- include('includes/nav') %>
+
+  <main class="container my-4">
+    <% if (news.length > 0) { %>
+      <% news.forEach(item => { %>
+        <h2><%= item.title %></h2>
+        <p><%= item.content %></p>
+      <% }) %>
+    <% } else { %>
+      <p>Новостей нет.</p>
+    <% } %>
+  </main>
+
+  <%- include('includes/footer') %>
+</body>
+</html>

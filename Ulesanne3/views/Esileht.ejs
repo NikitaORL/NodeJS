@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<%- include('includes/head') %>
+<body>
+<%- include('includes/nav') %>
+
+<div class="container my-4">
+  <h1>Добро пожаловать в наш приют!</h1>
+  <p>Последние добавленные животные:</p>
+
+  <div class="row">
+    <% animals.forEach(animal => { %>
+      <div class="col-md-3 mb-4">
+        <div class="card">
+          <img src="<%= animal.image %>" class="card-img-top" alt="<%= animal.name %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= animal.name %></h5>
+            <p class="card-text">Вид: <%= animal.species %></p>
+            <p class="card-text">Возраст: <%= animal.age %></p>
+            <p class="card-text">Статус: <%= animal.status %></p>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('includes/footer') %>
+</body>
+</html>
