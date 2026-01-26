@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Avaleht</h1>
+    <a href="/news/create" class="btn btn-primary mb-3">+ Lisa uudis</a>
+
+    <% if (msg === 'deleted') { %>
+        <div class="alert alert-success">Postitus kustutati</div>
+    <% } %>
+    <% if (msg === 'delete_failed') { %>
+        <div class="alert alert-danger">Postitust ei õnnestunud kustutada</div>
+    <% } %>
+    <% if (msg === 'created') { %>
+        <div class="alert alert-success">Postitus lisati</div>
+    <% } %>
+
+    <div class="row">
+        <% news.forEach(n => { %>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <% if (n.image) { %>
+                        <img src="/uploads/<%= n.image %>" class="card-img-top" alt="Uudis">
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/news/<%= n.id %>"><%= n.title %></a>
+                        </h5>
+                        <p class="card-text"><%= n.content.substring(0, 100) %>...</p>
+                        <a href="/news/<%= n.id %>/edit" class="btn btn-secondary btn-sm">Muuda</a>
+                        <form action="/news/delete" method="POST" class="d-inline" onsubmit="return confirm('Kas oled kindel?');">
+                            <input type="hidden" name="id" value="<%= n.id %>">
+                            <button type="submit" class="btn btn-danger btn-sm">Kustuta</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
