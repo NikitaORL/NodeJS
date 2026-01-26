@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+</head>
+<body>
+<h1>Lisa uudis</h1>
+
+<form action="/news/create" method="POST">
+    <input type="text" name="title" placeholder="Pealkiri" required><br><br>
+    <textarea name="content" placeholder="Sisu" required></textarea><br><br>
+    <button type="submit">Salvesta</button>
+</form>
+
+<a href="/">Tagasi avalehele</a>
+</body>
+</html>

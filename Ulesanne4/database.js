@@ -1,7 +1,6 @@
 require('dotenv').config();
-const mysql = require('mysql2/promise'); // Настройки базы данных
+const mysql = require('mysql2/promise');
 
-// Создание подключения к базе данных
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -9,25 +8,39 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
-// Проверка подключения к базе данных
+// Проверка соединения
 async function testConnection() {
     await pool.query('SELECT 1');
-    console.log('Connection exists');
+    console.log('Ühendus olemas');
 }
-
 testConnection();
 
-// Получение всех новостей
+// Получить все новости
 async function getNews() {
-    const [rows] = await pool.query('SELECT * FROM news');
-    console.log(rows);
+    const [rows] = await pool.query('SELECT * FROM news ORDER BY id DESC');
     return rows;
 }
 
-// Получение одной новости по ID
+// Получить новость по id
 async function getNewsById(id) {
     const [rows] = await pool.query('SELECT * FROM news WHERE id = ?', [id]);
     return rows[0];
 }
 
-module.exports = { getNews, getNewsById };
+// Добавить новость
+async function createNews(title, content, image = null) {
+    await pool.execute('INSERT INTO news (title, content, image) VALUES (?, ?, ?)', [title, content, image]);
+}
+
+// Обновить новость
+async function updateNews(id, title, content, image = null) {
+    await pool.execute('UPDATE news SET title = ?, content = ?, image = ? WHERE id = ?', [title, content, image, id]);
+}
+
+// Удалить новость
+async function deleteNews(id) {
+    const [result] = await pool.query('DELETE FROM news WHERE id = ?', [id]);
+    return result.affectedRows > 0;
+}
+
+module.exports = { getNews, getNewsById, createNews, updateNews, deleteNews };

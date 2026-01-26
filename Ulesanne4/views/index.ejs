@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="et">
-<head>
-    <meta charset="UTF-8">
-    <title><%= title %></title>
-</head>
-<body>
 <% news.forEach(n => { %>
-    <h2>
-        <a href="/news/<%= n.id %>"><%= n.title %></a>
-    </h2>
+    <h2><a href="/news/<%= n.id %>"><%= n.title %></a></h2>
+
+    <% if (n.image) { %>
+        <img src="/uploads/<%= n.image %>" style="max-width:100px">
+    <% } %>
+
+    <a href="/news/<%= n.id %>/edit">Muuda</a>
+    <form action="/news/delete" method="POST" onsubmit="return confirm('Kas oled kindel?');">
+        <input type="hidden" name="id" value="<%= n.id %>">
+        <button type="submit">Kustuta</button>
+    </form>
 <% }) %>
-</body>
-</html>
