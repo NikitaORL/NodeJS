@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+</head>
+<body>
+<% news.forEach(n => { %>
+    <h2>
+        <a href="/news/<%= n.id %>"><%= n.title %></a>
+    </h2>
+<% }) %>
+</body>
+</html>
