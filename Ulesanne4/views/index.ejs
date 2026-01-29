@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Avaleht</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">Uudised</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/">Avaleht</a></li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="btn btn-primary text-white" href="/add">Lisa Uudis</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <% if(msg === 'created'){ %>
+        <div class="alert alert-success">Uudis on lisatud</div>
+    <% } else if(msg === 'deleted'){ %>
+        <div class="alert alert-success">Uudis on kustutatud</div>
+    <% } else if(msg === 'delete_failed'){ %>
+        <div class="alert alert-danger">Ei saa kustuda</div>
+    <% } %>
+
+    <% news.forEach(n => { %>
+        <div class="card mb-3 p-3">
+            <h4><a href="/news/<%= n.id %>"><%= n.title %></a></h4>
+            <div class="mt-2">
+                <a href="/edit/<%= n.id %>" class="btn btn-warning btn-sm me-2">Muuda</a>
+                <a href="/delete/<%= n.id %>" class="btn btn-danger btn-sm">Kustuta</a>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
