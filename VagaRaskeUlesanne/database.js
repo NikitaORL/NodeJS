@@ -8,23 +8,22 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
+// USERS
 
-// Проверка соединения
-async function testConnection() {
-    await pool.query('SELECT 1');
-    console.log('Ühendus olemas');
+async function getUserByUsername(username) {
+    const [rows] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+    return rows[0];
 }
-testConnection();
 
-
+// NEWS
 
 async function getNews() {
-    const [rows] = await pool.query('SELECT * FROM news.ejs ORDER BY id DESC');
+    const [rows] = await pool.query('SELECT * FROM news ORDER BY id DESC');
     return rows;
 }
 
 async function getNewsById(id) {
-    const [rows] = await pool.query('SELECT * FROM news.ejs WHERE id = ?', [id]);
+    const [rows] = await pool.query('SELECT * FROM news WHERE id = ?', [id]);
     return rows[0];
 }
 
@@ -37,8 +36,15 @@ async function updateNews(id, title, content) {
 }
 
 async function deleteNews(id) {
-    const [result] = await pool.query('DELETE FROM news.ejs WHERE id = ?', [id]);
-    return result.affectedRows > 0;
+    const [res] = await pool.query('DELETE FROM news  WHERE id = ?', [id]);
+    return res.affectedRows > 0;
 }
 
-module.exports = { getNews, getNewsById, createNews, updateNews, deleteNews };
+module.exports = {
+    getUserByUsername,
+    getNews,
+    getNewsById,
+    createNews,
+    updateNews,
+    deleteNews
+};

@@ -1,0 +1,19 @@
+<h1>Uudised</h1>
+
+<p>Tere, <%= user.username %> (<%= user.role %>)</p>
+<a href="/logout">Logout</a>
+
+<% if (user.role === 'admin') { %>
+    <br><a href="/add">+ Lisa uudis</a>
+<% } %>
+
+<hr>
+
+<% news.forEach(n => { %>
+    <h3><a href="/news/<%= n.id %>"><%= n.title %></a></h3>
+
+    <% if (user.role === 'admin') { %>
+        <a href="/edit/<%= n.id %>">Muuda</a>
+        <a href="/delete/<%= n.id %>">Kustuta</a>
+    <% } %>
+<% }) %>

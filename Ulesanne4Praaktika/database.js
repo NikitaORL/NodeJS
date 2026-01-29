@@ -17,29 +17,29 @@ testConnection();
 
 // Получить все новости
 async function getNews() {
-    const [rows] = await pool.query('SELECT * FROM news ORDER BY id DESC');
+    const [rows] = await pool.query('SELECT * FROM news.ejs ORDER BY id DESC');
     return rows;
 }
 
 // Получить новость по id
 async function getNewsById(id) {
-    const [rows] = await pool.query('SELECT * FROM news WHERE id = ?', [id]);
+    const [rows] = await pool.query('SELECT * FROM news.ejs WHERE id = ?', [id]);
     return rows[0];
 }
 
 // Добавить новость
 async function createNews(title, content, image = null) {
-    await pool.execute('INSERT INTO news (title, content, image) VALUES (?, ?, ?)', [title, content, image]);
+    await pool.execute('INSERT INTO news.ejs (title, content, image) VALUES (?, ?, ?)', [title, content, image]);
 }
 
 // Обновить новость
 async function updateNews(id, title, content, image = null) {
-    await pool.execute('UPDATE news SET title = ?, content = ?, image = ? WHERE id = ?', [title, content, image, id]);
+    await pool.execute('UPDATE news.ejs SET title = ?, content = ?, image = ? WHERE id = ?', [title, content, image, id]);
 }
 
 // Удалить новость
 async function deleteNews(id) {
-    const [result] = await pool.query('DELETE FROM news WHERE id = ?', [id]);
+    const [result] = await pool.query('DELETE FROM news.ejs WHERE id = ?', [id]);
     return result.affectedRows > 0;
 }
 
