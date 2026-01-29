@@ -7,7 +7,7 @@ const pool = mysql.createPool({
     database: 'ulesanne5praaktika'
 });
 
-// Получение пользователя по имени
+
 async function getUserByUsername(username) {
     const [rows] = await pool.execute('SELECT * FROM users WHERE username = ?', [username]);
     return rows[0];

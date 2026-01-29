@@ -1,8 +1,9 @@
+// Импорты и настройки
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const { body, validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs'); // <- заменили bcrypt на bcryptjs
+const bcrypt = require('bcryptjs'); // bcryptjs для Windows
 const { getUserByUsername } = require('./database');
 const { requireLogin, bypassLogin } = require('./middleware');
 
@@ -19,7 +20,9 @@ app.use(session({
 }));
 
 app.set('view engine', 'ejs');
-app.set('views', './views'); // папка с EJS
+app.set('views', './views');
+
+
 
 // Login-leht
 app.get('/login', bypassLogin, (req, res) => {
@@ -30,7 +33,7 @@ app.get('/login', bypassLogin, (req, res) => {
     });
 });
 
-// Login andmete töötlemine
+
 app.post('/login',
     body('username').trim().notEmpty().withMessage('Kasutajanimi on kohustuslik'),
     body('password').trim().notEmpty().withMessage('Parool on kohustuslik'),
@@ -64,16 +67,21 @@ app.post('/login',
 app.get('/admin', requireLogin, (req, res) => {
     res.render('admin', {
         title: 'Admin leht',
-        msg: req.query.msg === 'login_success' ? 'Olete edukalt sisse logitud' : null
+        msg: req.query.msg === 'login_success' ? 'Olete edukalt sisse logitud' : null,
+        user: req.session.user
     });
 });
 
-// Logout
+
+// ------------------ Logout ------------------
 app.get('/logout', requireLogin, (req, res) => {
     req.session.destroy();
     res.clearCookie('connect.sid');
     res.redirect('/login');
 });
+
+// -------------------------------------------------
+
 
 app.listen(PORT, () => {
     console.log(`Server töötab http://localhost:${PORT}`);

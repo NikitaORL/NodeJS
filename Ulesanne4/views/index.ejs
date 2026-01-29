@@ -39,7 +39,11 @@
             <h4><a href="/news/<%= n.id %>"><%= n.title %></a></h4>
             <div class="mt-2">
                 <a href="/edit/<%= n.id %>" class="btn btn-warning btn-sm me-2">Muuda</a>
-                <a href="/delete/<%= n.id %>" class="btn btn-danger btn-sm">Kustuta</a>
+
+                <form action="/delete/<%= n.id %>" method="POST" style="display:inline">
+                    <button type="submit" class="btn btn-danger btn-sm">Kustuta</button>
+                </form>
+
             </div>
         </div>
     <% }) %>
